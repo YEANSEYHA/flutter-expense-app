@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import './widgets/user_transaction.dart';
 
-import './transaction.dart';
+import './widgets/new_transaction.dart';
+import 'package:flutter/material.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,20 +17,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Phone',
-      amount: 29.00,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Bike',
-      amount: 59.00,
-      date: DateTime.now(),
-    ),
-  ];
+  /* String titleInput = 'Hello';
+  String amountInput = 'Hello12'; */
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,80 +28,25 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Flutter App'),
       ),
-      body: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('CHART!'),
-                elevation: 5,
-              ),
-              color: Colors.blue,
-            ),
-            Card(
-              elevation: 5,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
+      body:  Container(
+        height: 1000,
+        child: SingleChildScrollView(
+          child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    child: Card(
+                      child: Text('CHART!'),
+                      elevation: 5,
                     ),
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Amount'),
-                    ),
-                    FlatButton(
-                      child: Text('Add Transaction'),
-                      textColor: Colors.purple,
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Column(
-              children: transactions.map((tx) {
-                return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Colors.purple,
-                          width: 2,
-                        )),
-                        child: Text(
-                          '\$${tx.amount}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.purple),
-                        ),
-                      ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(tx.title,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            Text(
-                              DateFormat.yMMMd().format(tx.date),
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ])
-                    ],
+                    color: Colors.blue,
                   ),
-                );
-              }).toList(),
-            )
-          ]),
+                  UserTransactions()
+                ]),
+        ),
+      ),
     );
   }
 }
